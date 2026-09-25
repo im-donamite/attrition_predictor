@@ -211,16 +211,17 @@ input_scaled = scaler.transform(input_data)
 # Create a button that runs the prediction when clicked.
 if st.button("🔍 Predict Employee Attrition"):
 
-    prediction = model.predict(input_scaled)[0]
+    # Get the probability of the employee leaving
+    prob = model.predict_proba(input_data)[0][1]
 
-    probabilities = model.predict_proba(input_scaled)[0]
+# Use a 40% probability threshold
+# instead of the default 50% threshold.
+    threshold = 0.40
 
-    attrition_probability = probabilities[1]
-
-    if prediction == 1:
-        result = "Likely to Leave"
+    if prob >= threshold:
+        pred = 1
     else:
-        result = "Likely to Stay"
+        pred = 0
 
     # Display the result.
     st.markdown("### Prediction Result")
