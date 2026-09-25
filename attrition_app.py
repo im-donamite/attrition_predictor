@@ -4,18 +4,10 @@ import numpy as np
 import joblib
 
 
-# Load the NEW Logistic Regression model
-# This model was trained using our selected 12 features.
 model = joblib.load("attrition_model_new.pkl")
 
-
-# Load the scaler used during training.
-# New employee data must be scaled using this same scaler.
 scaler = joblib.load("attrition_scaler_new.pkl")
 
-
-# Load the feature columns created after one-hot encoding.
-# This ensures the app gives the model the exact columns it expects.
 feature_columns = joblib.load("feature_columns_new.pkl")
 
 # Page configuration
@@ -27,8 +19,6 @@ st.set_page_config(
 )
 
 # Custom CSS styling
-# This gives the app a pink and purple theme instead of
-# Streamlit's default appearance.
 
 st.markdown("""
     <style>
@@ -226,9 +216,7 @@ if st.button("🔍 Predict Employee Attrition"):
     probabilities = model.predict_proba(input_scaled)[0]
 
     attrition_probability = probabilities[1]
-    st.write("Prediction:", prediction)
-    st.write("Probability of Stay:", probabilities[0])
-    st.write("Probability of Leave:", probabilities[1])
+
     if prediction == 1:
         result = "Likely to Leave"
     else:
